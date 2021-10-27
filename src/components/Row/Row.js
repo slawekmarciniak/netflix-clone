@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import YouTube from "react-youtube";
+// import YouTube from "react-youtube";
 import axios from "../../axios";
 import "./Row.css";
-import movieTrailer from "movie-trailer";
 
 const base_url = "https://image.tmdb.org/t/p/original/";
 
@@ -11,7 +10,9 @@ const Row = ({ title, fetchUrl, isLargeRow }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const request = await axios.get(fetchUrl);
+      const request = await axios.get(
+        "https://api.themoviedb.org/3/" + fetchUrl
+      );
       setMovies(request.data.results);
       console.log(request.data.results);
       return request.data.results;
@@ -40,7 +41,7 @@ const Row = ({ title, fetchUrl, isLargeRow }) => {
                 src={`${base_url}${
                   isLargeRow ? movie.poster_path : movie.backdrop_path
                 }`}
-                alt={movie?.name || movie?.original_title}
+                alt={movie?.name || movie?.title || movie?.original_title}
               />
             )
         )}
